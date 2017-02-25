@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source        = "github.com/chrisrodz/tf_vpc.git?ref=v0.0.1"
+  source        = "github.com/chrisrodz/tf_vpc.git?ref=v0.0.2"
   name          = "web"
   cidr          = "10.0.0.0/16"
   public_subnet = "10.0.1.0/24"
@@ -16,7 +16,7 @@ resource "aws_instance" "web" {
   private_ip                  = "${var.instance_ips[count.index]}"
   subnet_id                   = "${module.vpc.public_subnet_id}"
   associate_public_ip_address = true
-  user_data                   = "${file("files/web_bootstrap.sh")}"
+  user_data                   = "${file("${path.module}/files/web_bootstrap.sh")}"
 
   vpc_security_group_ids = ["${aws_security_group.web_host_sg.id}"]
 
