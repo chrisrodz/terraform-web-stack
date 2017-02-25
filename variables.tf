@@ -19,9 +19,9 @@ variable "instance_type" {
 
 variable "instance_ips" {
   description = "The IPs to use for our instances"
-  default = ["10.0.1.20", "10.0.1.21"]
+  default     = ["10.0.1.20", "10.0.1.21"]
 }
 
 variable "owner_tag" {
-  default =   ["team1", "team2"]
+  default = ["team1", "team2"]
 }

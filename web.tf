@@ -18,29 +18,28 @@ resource "aws_instance" "web" {
   associate_public_ip_address = true
   user_data                   = "${file("files/web_bootstrap.sh")}"
 
-  vpc_security_group_ids = [
-    "${aws_security_group.web_host_sg.id}",
-  ]
-
-  user_data = "${file("files/web_bootstrap.sh")}"
+  vpc_security_group_ids = ["${aws_security_group.web_host_sg.id}"]
 
   tags {
-    Name = "web-${format("%03d", count.index)}"
-    Owner = "element(${var.owner_tag, count.index)}"
+    Name  = "web-${format("%03d", count.index)}"
+    Owner = "${element(var.owner_tag, count.index)}"
   }
-  count  = "${length(var.instance_ips)}"
+
+  count = "${length(var.instance_ips)}"
 }
 
 resource "aws_elb" "web" {
   name            = "web-elb"
   subnets         = ["${module.vpc.public_subnet_id}"]
   security_groups = ["${aws_security_group.web_inbound_sg.id}"]
+
   listener {
-    instance_port = 80
+    instance_port     = 80
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
   }
+
   instances = ["${aws_instance.web.*.id}"]
 }
 
