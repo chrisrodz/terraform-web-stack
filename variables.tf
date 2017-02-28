@@ -25,3 +25,7 @@ variable "instance_ips" {
 variable "owner_tag" {
   default = ["team1", "team2"]
 }
+
+variable "key_path" {
+  default = "/Users/chrisrodz/MyKeyPair.pem"
+}
