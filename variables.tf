@@ -29,3 +29,13 @@ variable "owner_tag" {
 variable "key_path" {
   default = "/Users/chrisrodz/MyKeyPair.pem"
 }
+
+variable "prefix" {
+  default     = "examplecom"
+  description = "The name of our org, i.e. examplecom"
+}
+
+variable "environment" {
+  default     = "web"
+  description = "The name of the environment."
+}

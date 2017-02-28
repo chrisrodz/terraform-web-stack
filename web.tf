@@ -2,6 +2,12 @@ provider "aws" {
   region = "${var.region}"
 }
 
+module "remote_state" {
+  source      = "github.com/chrisrodz/terraform-remote-state.git"
+  prefix      = "${var.prefix}"
+  environment = "${var.environment}"
+}
+
 module "vpc" {
   source        = "github.com/chrisrodz/tf_vpc.git?ref=v0.0.2"
   name          = "web"
